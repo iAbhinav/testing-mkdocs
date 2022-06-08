@@ -1,0 +1,957 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../resources/images/logo/umun/225x225.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.3">
+    
+    
+      
+        <title>SSL on Centos 7 - Umun Ved</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.4a0965b7.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#000000">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ssl-on-centos-7" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Umun Ved" class="md-header__button md-logo" aria-label="Umun Ved" data-md-component="logo">
+      
+  <img src="../../../resources/images/logo/umun/225x225.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Umun Ved
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SSL on Centos 7
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Umun Ved" class="md-nav__button md-logo" aria-label="Umun Ved" data-md-component="logo">
+      
+  <img src="../../../resources/images/logo/umun/225x225.png" alt="logo">
+
+    </a>
+    Umun Ved
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Development
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Development" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Development
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          Linux
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Linux" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Linux
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          SSL on Centos 7
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        SSL on Centos 7
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#frontend" class="md-nav__link">
+     Frontend
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backend" class="md-nav__link">
+    Backend
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#renew-license" class="md-nav__link">
+    Renew License
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Umun framework
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Umun framework" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Umun framework
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../umun%20framework/" class="md-nav__link">
+        Introduction to Umun Framework
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_2" type="checkbox" id="__nav_2_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2_2">
+          Theme
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Theme" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Theme
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../umun%20framework/theme/" class="md-nav__link">
+        🎨 Themes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Technical documentation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Technical documentation" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Technical documentation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical%20documentation/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2">
+          Markdown
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Markdown" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Markdown
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical%20documentation/markdown/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical%20documentation/markdown/cheatsheat/" class="md-nav__link">
+        Markdown Cheat Sheet 🏴‍☠
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2_3" type="checkbox" id="__nav_3_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2_3">
+          Mkdocs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Mkdocs" data-md-level="3">
+        <label class="md-nav__title" for="__nav_3_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Mkdocs
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical%20documentation/markdown/mkdocs/" class="md-nav__link">
+        MkDocs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#frontend" class="md-nav__link">
+     Frontend
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backend" class="md-nav__link">
+    Backend
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#renew-license" class="md-nav__link">
+    Renew License
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="ssl-on-centos-7">SSL on Centos 7</h1>
+<hr />
+<h3 id="frontend"><a name="frontend"></a> Frontend</h3>
+<hr />
+<ol>
+<li>Install apache http web server</li>
+</ol>
+<pre><code>yum install -y httpd mod_ssl
+</code></pre>
+<ol>
+<li>
+<p>Optional: To change the port of apache</p>
+<ul>
+<li><code>cd /etc/httpd/conf/httpd.conf</code></li>
+<li>Append the following
+<code>Listen 80
+&lt;IfModule ssl_module&gt;
+Listen 443
+&lt;/IfModule&gt;</code></li>
+</ul>
+</li>
+<li>
+<p>Start server</p>
+</li>
+</ol>
+<pre><code>systemctl start httpd
+systemctl enable httpd
+</code></pre>
+<ol>
+<li>Find the document root on your server</li>
+</ol>
+<pre><code>grep -ri DocumentRoot /etc/httpd
+</code></pre>
+<blockquote>
+<p>You will find an address like</p>
+<p><code>/etc/httpd/conf.d/ssl.conf:#DocumentRoot "/var/www/html"</code></p>
+</blockquote>
+<ol>
+<li>Paste your index.html file here</li>
+</ol>
+<pre><code>echo demo &gt; /var/www/html/index.html
+</code></pre>
+<ol>
+<li>If this demos is not available at server:80</li>
+</ol>
+<blockquote>
+<p>Add this to rebootinstructions.sh as well</p>
+</blockquote>
+<pre><code>sudo /sbin/iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 80
+</code></pre>
+<ol>
+<li>
+<p>Also change this in the <code>rebootinstructions.sh</code></p>
+</li>
+<li>
+<p>Change default document root</p>
+<ul>
+<li>Edit httpd.conf file<code>vi /etc/httpd/conf/httpd.conf</code></li>
+<li>And change DocumentRoot “desired path”</li>
+<li>Also change
+  <code>&lt;Directory "/home/webmaster/website/www"&gt;</code></li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>i.e. change 2 occurrences of /var/www/html with your desired path</p>
+</blockquote>
+<ol>
+<li>Give permission to webmaster</li>
+</ol>
+<pre><code>chmod 777 /home/webmaster
+</code></pre>
+<ol>
+<li>Restart httpd</li>
+</ol>
+<pre><code>Systemctl restart httpd
+</code></pre>
+<ol>
+<li>Stop existing pm2 task for hosting since it is not required now</li>
+</ol>
+<pre><code>pm2 kill
+</code></pre>
+<ol>
+<li>Add exception to the firewall (if you are using firewalld)</li>
+</ol>
+<pre><code>firewall-cmd –permanent –zone=public –add-service=http
+firewall-cmd –permanent –zone=public –add-service=https
+firewall-cmd –reload
+</code></pre>
+<blockquote>
+<p>or Use ufw allow to open your ports 80 &amp; 443</p>
+</blockquote>
+<ol>
+<li>Install epel repository</li>
+</ol>
+<pre><code>yum install -y epel-release
+</code></pre>
+<ol>
+<li>Install cert bot application</li>
+</ol>
+<pre><code>yum install certbot -y
+</code></pre>
+<ol>
+<li>You can search for your server using (if you are not using apache)</li>
+</ol>
+<pre><code>yum search certbot
+</code></pre>
+<ol>
+<li>Install certbot for apache</li>
+</ol>
+<pre><code>yum install -y python2-certbot-apache
+</code></pre>
+<ol>
+<li>Generate ssl use –apache if you know your server else follow certbot</li>
+</ol>
+<pre><code>certbot --apache -d your-domain 
+</code></pre>
+<blockquote>
+<p>if that doesn’t work</p>
+</blockquote>
+<ul>
+<li>first run</li>
+</ul>
+<pre><code>certbot certonly -d your-domain --webroot -w /home/webmaster/website/www
+</code></pre>
+<ul>
+<li>
+<p>Choose option (3: Place files in webroot directory (webroot))</p>
+</li>
+<li>
+<p>and then</p>
+</li>
+</ul>
+<pre><code>certbot --apache -d your-domain
+</code></pre>
+<h3 id="backend">Backend</h3>
+<hr />
+<p>For a https front end, all the backend calls should be https as well hence you need to serve back end with https as well</p>
+<ol>
+<li>
+<p>Go to <code>/etc/letsencrypt/live/yoursitefolder**</code></p>
+</li>
+<li>
+<p>Generate keystore using</p>
+</li>
+</ol>
+<pre><code>openssl pkcs12 -export -in fullchain.pem -inkey privkey.pem -out keystore.p12 -name tomcat -CAfile chain.pem -caname root
+</code></pre>
+<ol>
+<li>Download this and Paste the generated keystore in <code>“src/main/resources/keystore”</code></li>
+</ol>
+<blockquote>
+<p>Or to the jar, since we have used this location in softrade code</p>
+</blockquote>
+<ol>
+<li>In application.properties paste the following</li>
+</ol>
+<pre><code># The format used for the keystore. It could be set to JKS in case it is a JKS file
+server.ssl.keyStoreType=PKCS12
+# The path to the keystore containing the certificate
+server.ssl.key-store=classpath:keystore/keystore.p12
+# The password used to generate the certificate
+server.ssl.key-store-password=&lt;your-password-here&gt;
+# The alias mapped to the certificate
+server.ssl.keyAlias=tomcat
+</code></pre>
+<blockquote>
+<p>change <code>server.ssl.key-store-password=&lt;your-password-here&gt;</code> to your desired password </p>
+<p>Also, you can use direct location such as server.ssl.key-store=/root/jar/keystore.p12</p>
+</blockquote>
+<ol>
+<li>Disabling ssl on run time</li>
+</ol>
+<pre><code class="language-java">@Configuration
+public class CustomContainer implements EmbeddedServletContainerCustomizer {
+
+   @Autowired
+   private SystemPrefService systemPrefService;
+
+   @Override
+   public void customize(ConfigurableEmbeddedServletContainer container) {
+     if(!systemPrefService.isSSL()) {
+         Ssl ssl = new Ssl();
+         ssl.setEnabled(false);
+         ssl.setKeyStore(&quot;&quot;);
+         container.setSsl(ssl);
+     }
+   }
+}
+</code></pre>
+<ol>
+<li>
+<p>Step 4-5 have been done in code, simply change the <code>syspref isSSL = true</code></p>
+</li>
+<li>
+<p>then restart the server</p>
+</li>
+</ol>
+<h3 id="renew-license">Renew License</h3>
+<hr />
+<ol>
+<li>
+<p>Run <code>certbot --apache -d your-domain</code></p>
+</li>
+<li>
+<p>Run following command in <code>/etc/letsencrypt/live/your-domain-folder</code></p>
+</li>
+</ol>
+<pre><code class="language-bash">openssl pkcs12 -export -in fullchain.pem -inkey privkey.pem -out keystore.p12 -name tomcat -CAfile chain.pem -caname root
+</code></pre>
+<ol>
+<li>
+<p>Restart spring server</p>
+</li>
+<li>
+<p>Delete SSL</p>
+</li>
+<li>
+<p><code>sudo certbot delete --cert-name &lt;certname&gt;</code></p>
+</li>
+<li>
+<p><code>yum remove -y httpd mod_ssl</code></p>
+</li>
+<li>
+<p>re-install from <a href="#frontend">top of page</a></p>
+</li>
+</ol>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Index" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Index
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../umun%20framework/" class="md-footer__link md-footer__link--next" aria-label="Next: Introduction to Umun Framework" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Introduction to Umun Framework
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.b028fd86.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.f758a944.min.js"></script>
+      
+    
+  </body>
+</html>
