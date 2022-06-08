@@ -1,0 +1,10 @@
+site_name: "Umun Ved"
+theme:
+  name: 'material'
+  logo: 'resources/images/logo/umun/225x225.png'
+  favicon: 'resources/images/logo/umun/225x225.png'
+  palette:
+    primary: black
+markdown_extensions:
+  - attr_list
+  - md_in_html
