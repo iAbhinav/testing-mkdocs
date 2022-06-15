@@ -1,4 +1,4 @@
-# Hosting artfacts on Maven Central
+# Hosting artifacts on Maven Central
 
 ---
 
