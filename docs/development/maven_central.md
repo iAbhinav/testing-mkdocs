@@ -119,6 +119,12 @@ mvn versions:set -DnewVersion=0.0.2
 mvn clean deploy -P release
 ```
 
+You may use `-Dmaven.javadoc.skip=true` to skip javadoc while compiling.
+
+```
+mvn clean deploy -P release -Dmaven.javadoc.skip=true
+```
+
 ## Testing with a new project
 
 1. Create a new project using [Spring starter](start.spring.io)
