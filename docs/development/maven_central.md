@@ -121,9 +121,6 @@ mvn clean deploy -P release
 
 You may use `-Dmaven.javadoc.skip=true` to skip javadoc while compiling.
 
-```
-mvn clean deploy -P release -Dmaven.javadoc.skip=true
-```
 
 ## Testing with a new project
 
