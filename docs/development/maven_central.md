@@ -102,4 +102,9 @@ gpg --keyserver hkp://keyserver.ubuntu.com --send-keys C7347E970F093E08986641785
 mvn clean deploy
 ```
 
+12. Set version using
+```
+mvn versions:set -DnewVersion=1.0.0
+```
+
 
