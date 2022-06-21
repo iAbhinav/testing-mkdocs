@@ -82,9 +82,24 @@ https://central.sonatype.org/publish/publish-guide/#deployment
 GPG_TTY=$(tty)
 export GPG_TTY
 ```
+* Run `gpg -k` to list the newly made key
+* Find the the public-key ifront of pub `C7347E970F093E08986641785A5BD6B1028A5CEA`
+
+```
+/Users/abhinav/.gnupg/pubring.kbx
+---------------------------------
+pub   ed25519 2022-06-21 [SC] [expires: 2024-06-20]
+      C7347E970F093E08986641785A5BD6B1028A5CEA
+```
+* Send the key to server
+```
+gpg --keyserver hkp://keyserver.ubuntu.com --send-keys C7347E970F093E08986641785A5BD6B1028A5CEA
+```
 
 11. Deploy
 
 ```
 mvn clean deploy
 ```
+
+
