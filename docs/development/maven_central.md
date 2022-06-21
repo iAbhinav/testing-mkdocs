@@ -55,5 +55,36 @@ https://central.sonatype.org/publish/publish-guide/#deployment
       <password>your-jira-pwd</password>
     </server>
   </servers>
+  
+  <profiles>
+    <profile>
+      <id>ossrh</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <gpg.executable>gpg</gpg.executable>
+        <gpg.passphrase>the_pass_phrase</gpg.passphrase>
+      </properties>
+    </profile>
+  </profiles>
+ 
 </settings>
+```
+> GPG Passphase could be any passphrase of your liking
+
+> Replace `<gpg.executable>gpg2</gpg.executable>` with `<gpg.executable>gpg</gpg.executable>` if copying from the OG documentation.
+
+10. Install GPG2 on your system
+* Mac using [homebrew](https://formulae.brew.sh/formula/gnupg) `brew install gnupg`
+* Add the following to your ~/.bash_profile
+```
+GPG_TTY=$(tty)
+export GPG_TTY
+```
+
+11. Deploy
+
+```
+mvn clean deploy
 ```
