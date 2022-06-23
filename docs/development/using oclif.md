@@ -44,6 +44,11 @@ npm run build
  oclif generate command [Command Name]
  ```
  
+ ## Publish Library
+ ```
+ npm publish
+ ```
+ 
 ## Command Arguments
 
 [docs](https://oclif.io/docs/args)
