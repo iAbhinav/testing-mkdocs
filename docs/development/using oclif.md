@@ -53,6 +53,23 @@ npm run build
 
 [docs](https://oclif.io/docs/args)
 
+## Autoreload when running
+
+* Install [build-if-changed](https://www.npmjs.com/package/build-if-changed) npm library;
+```
+yarn add build-if-changed -D
+```
+
+* Add this to root of `package.json`
+```
+"bic": ["*.ts"],
+```
+
+* Run your command like so
+```
+yarn bic; ./bin/run [COMMAND NAME]
+```
+> `yarn bic` will only build the project if `src` folder is changed.  `./bin/run [COMMAND NAME]` will run the command.
 
 ## Links
 
