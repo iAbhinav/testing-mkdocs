@@ -57,6 +57,16 @@ UPDATE apps/[PROJECT NAME]/src/app/app.module.ts
 ```
  nx server [PROJECT NAME]
  ```
+ 
+* Host 
+
+```
+ node dist/[PROJECT NAME]/server/main.js 
+```
+
+> Check dist location from "ProjectName":"server" target in angular.json
+
+
 
 * Serve the app
 
