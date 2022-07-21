@@ -37,13 +37,29 @@ UPDATE apps/[PROJECT NAME]/src/app/app.module.ts
 ```
 
 
+* Serve App
+
+Your app should be served if everything is done right.
+
+```
+ nx serve [PROJECT NAME]
+```
+
+your app should be hosted on `localhost:4200`
+
+
 * Build server dist using
+
+If SSR dependencies have been added correctly, you should be able to build your ssr project.
 
 ```
  nx server [PROJECT NAME]
 ```
 
-* Build browser dist
+it will create a new dist folding in `dist/[PROJECT NAME]/server`. The location may vary, check your angular.json and search for "server".
+
+
+* Build browser dist, this will be downloaded by the browser once it has displayed the SSRed version.
 
 ```
 nx build [PROJECT NAME]
@@ -127,6 +143,9 @@ export * from './src/main.server';
 * In the "server" target change `"main": "apps/[PROJECT NAME]/src/main.server.ts",` to `"main": "apps/[PROJECT NAME]/server.ts",`
 
   * and Create a new target "serve-ssr"
+
+this target will make SSR be served like an angular app with live reload and all the bells and whitles.
+
   ```
    "serve-ssr": {
           "builder": "@nguniversal/builders:ssr-dev-server",
@@ -143,11 +162,21 @@ export * from './src/main.server';
           "defaultConfiguration": "development"
         }
   ```
+  
+  
   > Had to use `"builder"` instead of executor as suggested in the article
   
   > `"server"` target is made while adding the schematic
 
 
+* Add this file to `tsconfig.server.ts`
+
+```
+ "files": [
+    "src/main.server.ts",
+    "server.ts"
+  ],
+```
 
 
 * Build SSR Server
@@ -163,6 +192,12 @@ export * from './src/main.server';
 ```
 
 > Check dist location from "ProjectName":"server" target in angular.json
+
+this will host on localhost:4000
+
+> might use a different port if 4000 is already in use
+
+
 
 
 
